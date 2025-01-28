@@ -33,3 +33,6 @@
 
 .pio
 .vscode
+
+#Mac
+.DS_Store
