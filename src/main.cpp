@@ -2,32 +2,32 @@
 #include <FreqCount.h>
 #include <iostream>
 
-// put function declarations here:
-int myFunction(int, int);
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  // erzeugung der Objekte
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+
+  // 1. RoboterController fragt die Daten von SensorData ab z.B.: getCurrentSensorData()
+  //    1.1. SensorData holt sich den aktuellen Zustand des Arduinos über das Pininterface
+  //    1.2. SensorData muss die Daten verarbeiten (Umrechnungen der Drehzahl, ...)
+  // 2. RoboterController entscheidet, welches Movement nötig ist und errechnet das Korrekturdelta
+  // 3. RoboterController übergibt das Korrketurdelta an die Movement und führt die entsprechende bewegung aus
+  // 4. Movement steuert über das Pininteface die Motoren an
+
 }
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
-}
 
-
-class Movement {
+class Robot {
   private:
-    /* data */
+    SensorData sensorData;
+    Movement movement;
+
   public:
-    Movement(/* args */);
-    void turnLeft(float delta);
-    void turnRight(float delta);
-    void forward(float delta);
+    void next(){
+      // Berechnet den nächsten Schirtt des Roboters
+    }
 };
 
 
@@ -44,28 +44,31 @@ class ArduinoPinInterface{
 
   private:
   public:
-    // Bewegunsmotoren
-    const int A_PIN_OUT_MOTOR_R = 1;
-    const int A_PIN_OUT_MOTOR_L = 2;
+    // Bewegunsmotoren Links
+    const int PWM_PIN_OUT_MOTOR_L_BACK = 1;
+    const int PWM_PIN_OUT_MOTOR_L_FORW = 2;
+
+    // Bewegunsmotoren Rechts
+    const int PWM_PIN_OUT_MOTOR_R_BACK = 3;
+    const int PWM_PIN_OUT_MOTOR_R_FORW = 4;
 
     // Servomotor zum drehen der Ultraschallsensoren
-    const int A_PIN_OUT_POSITION_SERVO = 3;
+    const int PWM_PIN_OUT_POSITION_SERVO_TURN_R = 5;
+    const int PWM_PIN_OUT_POSITION_SERVO_TURN_L = 5;
 
-    // messwert des Drehzahlsensors (Pegelwechsel)
-    const int D_PIN_IN_SPEED_SENSOR = 4;
+    // messwert des Drehzahlsensors rechts und links(Pegelwechsel)
+    const int D_PIN_IN_SPEED_SENSOR_R = 6;
+    const int D_PIN_IN_SPEED_SENSOR_L = 6;
 
-    // Ultraschallsensor vorne
-    const int D_PIN_OUT_TRIGGER_F = 5;
-    const int D_PIN_IN_ECHO_F = 6;
+    // Tigger für alle drei Ultraschallsensoren
+    const int D_PIN_OUT_TRIGGER = 7;
 
-    // Ultraschallsensor rechts
-    const int D_PIN_OUT_TRIGGER_R = 7;
-    const int D_PIN_IN_ECHO_R = 8;
+    // Ultraschallsensor vorne, links, rechts
+    const int D_PIN_IN_ECHO_F = 8;
+    const int D_PIN_IN_ECHO_L = 9;
+    const int D_PIN_IN_ECHO_R = 10;
 
-    // Ultraschallsensor links
-    const int D_PIN_OUT_TRIGGER_L = 9;
-    const int D_PIN_IN_ECHO_L = 10;
-
+    // abstrakte Methoden
     virtual void setDigitalPin(int pin, bool value) = 0;
     virtual bool getDigitalPin(int pin) = 0;
     virtual void setAnalogPin(int pin, int value) = 0;
@@ -113,7 +116,6 @@ class ArduinoMock: public ArduinoPinInterface{
 };
 
 
-
 class SensorData{
   private:
     // Bewegunsmotoren
@@ -141,13 +143,24 @@ class SensorData{
 };
 
 
+class Movement {
+  private:
+    /* data */
+  public:
+    Movement(/* args */);
+    void turnLeft(float delta);
+    void turnRight(float delta);
+    void forward(float delta);
+};
+
+
 Movement::Movement(/* args */)
 {
   //Konstruktor
 }
 
 void::Movement::turnLeft(float delta=0.0){
-float pinMotorLeft = 0.0
+float pinMotorLeft = 0.0;
 
 }
 
@@ -156,7 +169,7 @@ void::Movement::turnRight(float delta=0.0){
 }
 
 void::Movement::forward(float delta=0.0){
-
+// Movment liest bei SensorData aus und übergibt an Arduino
 }
 
 
