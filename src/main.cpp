@@ -1,35 +1,8 @@
 #include <Arduino.h>
-#include <FreqCount.h>
+#include <FreqCount.h> // drehzal ermitteln
 #include <iostream>
-
-
-void setup() {
-  // erzeugung der Objekte
-}
-
-void loop() {
-
-  // 1. RoboterController fragt die Daten von SensorData ab z.B.: getCurrentSensorData()
-  //    1.1. SensorData holt sich den aktuellen Zustand des Arduinos über das Pininterface
-  //    1.2. SensorData muss die Daten verarbeiten (Umrechnungen der Drehzahl, ...)
-  // 2. RoboterController entscheidet, welches Movement nötig ist und errechnet das Korrekturdelta
-  // 3. RoboterController übergibt das Korrketurdelta an die Movement und führt die entsprechende bewegung aus
-  // 4. Movement steuert über das Pininteface die Motoren an
-
-}
-
-
-class Robot {
-  private:
-    SensorData sensorData;
-    Movement movement;
-
-  public:
-    void next(){
-      // Berechnet den nächsten Schirtt des Roboters
-    }
-};
-
+#include <NewPing.h> // Abstand berechnen
+#include <L298NX2.h> // Motoren ansteuern
 
 class ArduinoPinInterface{
   /**
@@ -115,62 +88,125 @@ class ArduinoMock: public ArduinoPinInterface{
     }
 };
 
+Arduino arduino;
+
+
+void setup() {
+  // erzeugung der Objekte
+}
+
+void loop() {
+
+  // 1. RoboterController fragt die Daten von SensorData ab z.B.: getCurrentSensorData()
+  //    1.1. SensorData holt sich den aktuellen Zustand des Arduinos über das Pininterface
+  //    1.2. SensorData muss die Daten verarbeiten (Umrechnungen der Drehzahl, ...)
+  // 2. RoboterController entscheidet, welches Movement nötig ist und errechnet das Korrekturdelta
+  // 3. RoboterController übergibt das Korrketurdelta an die Movement und führt die entsprechende bewegung aus
+  // 4. Movement steuert über das Pininteface die Motoren an
+
+
+  Robot robot;
+  robot.next();
+}
+
+class Robot {
+  private:
+    SensorData sensorData;
+    Movement movement;
+
+  public:
+    void next(){
+      sensorData.update();
+      sensorData.getDistanceR();
+      // if right is free
+        movement.turnRight(0);
+      // Berechnet den nächsten Schirtt des Roboters
+    }
+};
+
 
 class SensorData{
   private:
-    // Bewegunsmotoren
-    const int out_MotorRight = 0.0;
-    float out_MotorLeft = 0.0;
-
-    // Servomotor zum drehen der Ultraschallsensoren
-    float out_PositionServo = 0.0;
-
-    // messwert des Drehzahlsensors (Pegelwechsel)
-    bool in_digitalSpeedSensor = false;
+    // Drehzahlsensor rechts und links
+    float velocityR = 0.0;
+    float velocityL = 0.0;
 
     // Ultraschallsensor vorne
-    bool out_triggerSensorF = false;
-    float in_echoSensorF = 0.0;
+    float distanceF = 0.0;
 
     // Ultraschallsensor rechts
-    bool out_triggerSensorR = false;
-    float in_echoSensorR = 0.0;
+    float distanceR = 0.0;
 
     // Ultraschallsensor links
-    bool out_triggerSensorL = false;
-    float in_echoSensorL = 0.0;
+    float distanceL = 0.0;
+
+    float calcDistance(){
+      // berechnet den abstand mit Ultraschall
+    }
+
+    float calcVelocity(){
+      // berechnet die geschwindigkeit der Räder
+    }
+
   public:
+    const int MAX_DISTANCE = 100;
+
+    void update(){
+      calcDistance();
+      calcVelocity();
+    }
+
+    float getVelocityR(){
+      return velocityL;
+    }
+
+    float getVelocityL(){
+      return velocityL;
+    }
+
+    float getDistanceF(){
+      return distanceF;
+    }
+
+    float getDistanceR(){
+      return distanceR;
+    }
+
+    float getDistanceL(){
+      return distanceL;
+    }
 };
 
 
 class Movement {
   private:
-    /* data */
+    L298NX2 motors;
+
   public:
-    Movement(/* args */);
-    void turnLeft(float delta);
-    void turnRight(float delta);
-    void forward(float delta);
+    Movement(): motors(
+      1,
+      arduino.PWM_PIN_OUT_MOTOR_L_BACK,
+      arduino.PWM_PIN_OUT_MOTOR_L_FORW,
+      2,
+      arduino.PWM_PIN_OUT_MOTOR_R_BACK,
+      arduino.PWM_PIN_OUT_MOTOR_R_FORW
+    ){};
+    
+    void turnLeft(float delta){
+      //delta ist der unterschied zwischen links und rechts
+  
+    }
+
+    void turnRight(float delta){
+      
+    }
+
+    void forward(float delta){
+      motors.forwardA();
+      motors.forwardB();
+    }
 };
 
-
-Movement::Movement(/* args */)
-{
-  //Konstruktor
-}
-
-void::Movement::turnLeft(float delta=0.0){
-float pinMotorLeft = 0.0;
-
-}
-
-void::Movement::turnRight(float delta=0.0){
-
-}
-
-void::Movement::forward(float delta=0.0){
-// Movment liest bei SensorData aus und übergibt an Arduino
-}
 
 
 
