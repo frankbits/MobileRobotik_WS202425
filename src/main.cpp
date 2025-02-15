@@ -1,5 +1,6 @@
 #include <Arduino.h>
-#include <FreqCount.h> // drehzal ermitteln
+#include <util/atomic.h> // Diese Bibliothek fügt das ATOMIC_BLOCK-Makro ein.
+#include <FreqCount.h> // Drehzahl ermitteln
 #include <iostream>
 #include <NewPing.h> // Abstand berechnen
 #include <L298NX2.h> // Motoren ansteuern
@@ -155,9 +156,11 @@ class DistanceSensor {
 
 class SensorData{
   private:
-    // Drehzahlsensor rechts und links
-    float velocityR = 0.0;
-    float velocityL = 0.0;
+    // Drehzahlsensor links und rechts
+    unsigned long lasttime_left;
+    unsigned long lasttime_right;
+    volatile float roundsPerMinute_L;
+    volatile float roundsPerMinute_R;
 
     // Ultraschallsensor vorne, links, rechts
     DistanceSensor sensorFront;
@@ -177,28 +180,56 @@ class SensorData{
       distanceR = sensorRight.getCurrentDistance();
     }
 
-    float calcVelocity(){
-      // berechnet die geschwindigkeit der Räder
+    void RPM_left () {
+      unsigned long timer_left = micros();
+      if (!lasttime_left) return;
+      roundsPerMinute_L = 60000000 / timer_left - lasttime_left;
+      lasttime_left = timer_left;
+    }
+    
+    void RPM_right() {
+      unsigned long timer_right = micros();
+      if (!lasttime_right) return;
+      roundsPerMinute_R = 60000000 / timer_right - lasttime_right;
+      lasttime_right = timer_right;
     }
 
   public:
     const int MAX_DISTANCE = 100;
 
+    static SensorData* instance; // Für Zugriff in ISR für Drehzahlsensoren
+
     SensorData() 
       : sensorFront(arduino.D_PIN_OUT_TRIGGER, arduino.D_PIN_IN_ECHO_F),
       sensorRight(arduino.D_PIN_OUT_TRIGGER, arduino.D_PIN_IN_ECHO_R),
-      sensorLeft(arduino.D_PIN_OUT_TRIGGER, arduino.D_PIN_IN_ECHO_L) {}
+      sensorLeft(arduino.D_PIN_OUT_TRIGGER, arduino.D_PIN_IN_ECHO_L) {
+        // Drehzahlsensoren-Pins als Eingangspins setzen
+        pinMode(arduino.D_PIN_IN_SPEED_SENSOR_L, INPUT);
+        pinMode(arduino.D_PIN_IN_SPEED_SENSOR_R, INPUT);
+
+        // Interrupts auf Drehzahlsensoren-Pins setzen
+        SensorData::instance = this;
+        attachInterrupt(digitalPinToInterrupt(arduino.D_PIN_IN_SPEED_SENSOR_L), []() { instance->RPM_left(); }, RISING);
+        attachInterrupt(digitalPinToInterrupt(arduino.D_PIN_IN_SPEED_SENSOR_R), []() { instance->RPM_left(); }, RISING);
+    }
+
     void update(){
+      // RoundsPerMinute werden über kontinuierliche Interrupts aktualisiert
       calcDistance();
-      calcVelocity();
     }
 
-    float getVelocityR(){
-      return velocityL;
+    float getRoundsPerMinute_L(){
+      ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        // Code mit geblockten Interrupts hier (siehe https://www.arduino.cc/reference/en/language/variables/variable-scope-qualifiers/volatile/)
+        return roundsPerMinute_L;
+      }
     }
 
-    float getVelocityL(){
-      return velocityL;
+    float getRoundsPerMinute_R(){
+      ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+        // Code mit geblockten Interrupts hier (siehe https://www.arduino.cc/reference/en/language/variables/variable-scope-qualifiers/volatile/)
+        return roundsPerMinute_R;
+      }
     }
 
     float getDistanceF(){
