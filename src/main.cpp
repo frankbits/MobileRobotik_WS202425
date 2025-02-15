@@ -122,7 +122,7 @@ class Robot {
       sensorData.update();
       sensorData.getDistanceR();
       // if right is free
-        movement.turnRight(0);
+        movement.turnRight(100, 0);
       // Berechnet den nächsten Schirtt des Roboters
     }
 };
@@ -246,30 +246,76 @@ class Movement {
 
   public:
     Movement(): motors(
-      1,
-      arduino.PWM_PIN_OUT_MOTOR_L_BACK,
-      arduino.PWM_PIN_OUT_MOTOR_L_FORW,
-      2,
-      arduino.PWM_PIN_OUT_MOTOR_R_BACK,
-      arduino.PWM_PIN_OUT_MOTOR_R_FORW
+      arduino.PWM_PIN_OUT_MOTOR_L_ENA,
+      arduino.D_PIN_OUT_MOTOR_L_FORW,
+      arduino.D_PIN_OUT_MOTOR_L_BACK,
+      arduino.PWM_PIN_OUT_MOTOR_R_ENB,
+      arduino.D_PIN_OUT_MOTOR_R_FORW,
+      arduino.D_PIN_OUT_MOTOR_R_BACK
     ){};
     
-    void turnLeft(float delta){
-      //delta ist der unterschied zwischen links und rechts
-  
-    }
-
-    void turnRight(float delta){
-      
-    }
-
-    void forward(float delta){
-      motors.forwardA();
+    /**
+     * Drehe den Roboter mit der gegebenen Geschwindigkeit und Korrektur nach links.
+     * 
+     * Die Geschwindigkeit ist der absolute Wert für den linken Motor und der Korrekturfaktor 
+     * ist der relative Wert, der die Drehzal des rechten Motor an die des linken Motors anpassen soll.
+     * Ein positiver Korrekturfaktor beschleunigt den rechten Motor, ein negativer verlangsamt ihn.
+     * 
+     * Der Korrekturfaktor kann auch genutzt werden, um den Roboter stärker, oder weniger stark abbiegen zu lassen.
+     * So ist es beispielsweise möglich, die Positionierung des Roboters im Feld zu verbessern.
+     * 
+     * @param speed Die gewunschte Geschwindigkeit der Motoren
+     * @param delta der Korrekturfaktor in Prozent (-1.0 bis 1.0)
+     */
+    void turnLeft(unsigned short speed, float delta){
+      if (delta > 1.0) delta = 1.0;
+      if (delta < -1.0) delta = -1.0;
+      motors.setSpeedA(speed);
+      motors.setSpeedB(speed + (delta * speed));
+      motors.backwardA();
       motors.forwardB();
     }
+
+    /**
+     * Drehe den Roboter mit der gegebenen Geschwindigkeit und Korrektur nach rechts.
+     * 
+     * Die Geschwindigkeit ist der absolute Wert für den linken Motor und der Korrekturfaktor 
+     * ist der relative Wert, der die Drehzal des rechten Motor an die des linken Motors anpassen soll.
+     * Ein positiver Korrekturfaktor beschleunigt den rechten Motor, ein negativer verlangsamt ihn.
+     * 
+     * Der Korrekturfaktor kann auch genutzt werden, um den Roboter stärker, oder weniger stark abbiegen zu lassen.
+     * So ist es beispielsweise möglich, die Positionierung des Roboters im Feld zu verbessern.
+     * 
+     * @param speed Die gewunschte Geschwindigkeit der Motoren
+     * @param delta der Korrekturfaktor in Prozent (-1.0 bis 1.0)
+     */
+    void turnRight(unsigned short speed, float delta){
+      if (delta > 1.0) delta = 1.0;
+      if (delta < -1.0) delta = -1.0;
+      motors.setSpeedA(speed);
+      motors.setSpeedB(speed + (delta * speed));
+      motors.forwardA();
+      motors.backwardB();
+    }
+
+    /**
+     * Bewege den Roboter mit der gegebenen Geschwindigkeit und Korrektur vorwärts.
+     * 
+     * Die Geschwindigkeit ist der absolute Wert für den linken Motor und der Korrekturfaktor 
+     * ist der relative Wert, der die Drehzal des rechten Motor an die des linken Motors anpassen soll.
+     * Ein positiver Korrekturfaktor beschleunigt den rechten Motor, ein negativer verlangsamt ihn.
+     * 
+     * Der Korrekturfaktor kann auch genutzt werden, um den Roboter in eine bestimmte Richtung zu bewegen.
+     * So ist es beispielsweise möglich, die Positionierung des Roboters im Feld zu verbessern.
+     * 
+     * @param speed Die gewünschte Geschwindigkeit der Motoren
+     * @param delta der Korrekturfaktor in Prozent (-1.0 bis 1.0)
+     */ 
+    void forward(unsigned short speed, float delta){
+      if (delta > 1.0) delta = 1.0;
+      if (delta < -1.0) delta = -1.0;
+      motors.setSpeedA(speed);
+      motors.setSpeedB(speed + (delta * speed));
+      motors.forward();
+    }
 };
-
-
-
-
-
