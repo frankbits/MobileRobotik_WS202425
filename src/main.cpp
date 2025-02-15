@@ -132,6 +132,26 @@ class Robot {
     }
 };
 
+class DistanceSensor {
+  private:
+    const int MAX_DISTANCE = 100;
+    NewPing sensor;
+    float distance = 0.0;
+
+    void calcDistance() {
+      distance = sensor.ping_cm();
+    }
+
+  public:
+    // Konstruktor mit Initialisierungsliste
+    DistanceSensor(int trigger, int echo) 
+      : sensor(trigger, echo, MAX_DISTANCE) {  // Initialisiere sensor und distance
+    }
+
+    float getCurrentDistance() {
+      return distance;
+    }
+};
 
 class SensorData{
   private:
@@ -139,17 +159,22 @@ class SensorData{
     float velocityR = 0.0;
     float velocityL = 0.0;
 
-    // Ultraschallsensor vorne
+    // Ultraschallsensor vorne, links, rechts
+    DistanceSensor sensorFront;
+    DistanceSensor sensorLeft;
+    DistanceSensor sensorRight;
+    /** Abstand nach vorne in cm */
     float distanceF = 0.0;
-
-    // Ultraschallsensor rechts
+    /** Abstand nach links in cm */
+    float distanceL = 0.0;
+    /** Abstand nach rechts in cm */
     float distanceR = 0.0;
 
-    // Ultraschallsensor links
-    float distanceL = 0.0;
-
     float calcDistance(){
-      // berechnet den abstand mit Ultraschall
+      // berechnet den Abstand mit Ultraschall
+      distanceF = sensorFront.getCurrentDistance();
+      distanceL = sensorLeft.getCurrentDistance();
+      distanceR = sensorRight.getCurrentDistance();
     }
 
     float calcVelocity(){
@@ -159,6 +184,10 @@ class SensorData{
   public:
     const int MAX_DISTANCE = 100;
 
+    SensorData() 
+      : sensorFront(arduino.D_PIN_OUT_TRIGGER, arduino.D_PIN_IN_ECHO_F),
+      sensorRight(arduino.D_PIN_OUT_TRIGGER, arduino.D_PIN_IN_ECHO_R),
+      sensorLeft(arduino.D_PIN_OUT_TRIGGER, arduino.D_PIN_IN_ECHO_L) {}
     void update(){
       calcDistance();
       calcVelocity();
