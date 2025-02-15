@@ -17,29 +17,37 @@ class ArduinoPinInterface{
 
   private:
   public:
-    // Bewegunsmotoren Links
-    const int PWM_PIN_OUT_MOTOR_L_BACK = 1;
-    const int PWM_PIN_OUT_MOTOR_L_FORW = 2;
+    /** Digitaler Pin, zur Steuerung des linken Motors (Vorwaerts) */
+    const unsigned int D_PIN_OUT_MOTOR_L_FORW = 4;
+    /** Digitaler Pin, zur Steuerung des linken Motors (Rueckwaerts) */
+    const unsigned int D_PIN_OUT_MOTOR_L_BACK = 5;
+    /** PWM Pin, zur Steuerung der Geschwindigkeit des linken Motors */
+    const unsigned int PWM_PIN_OUT_MOTOR_L_ENA = 6;
 
-    // Bewegunsmotoren Rechts
-    const int PWM_PIN_OUT_MOTOR_R_BACK = 3;
-    const int PWM_PIN_OUT_MOTOR_R_FORW = 4;
+    /** Digitaler Pin, zur Steuerung des rechten Motors (Vorwaerts) */
+    const unsigned int D_PIN_OUT_MOTOR_R_FORW = 7;
+    /** Digitaler Pin, zur Steuerung des rechten Motors (Rueckwaerts) */
+    const unsigned int D_PIN_OUT_MOTOR_R_BACK = 8;
+    /** PWM Pin, zur Steuerung der Geschwindigkeit des rechten Motors */
+    const unsigned int PWM_PIN_OUT_MOTOR_R_ENB = 9;
 
-    // Servomotor zum drehen der Ultraschallsensoren
-    const int PWM_PIN_OUT_POSITION_SERVO_TURN_R = 5;
-    const int PWM_PIN_OUT_POSITION_SERVO_TURN_L = 5;
+    /** Digitaler Pin, zur Steuerung des Servos */
+    // const int D_PIN_OUT_POSITION_SERVO = 1; //TODO: können PIN 0 oder 1 als digitaler Pin verwendet werden?
 
-    // messwert des Drehzahlsensors rechts und links(Pegelwechsel)
-    const int D_PIN_IN_SPEED_SENSOR_R = 6;
-    const int D_PIN_IN_SPEED_SENSOR_L = 6;
+    /** Digitaler Pin, zur Messung des Pegelwechsels des linken Drehzahlsensors */
+    const int D_PIN_IN_SPEED_SENSOR_L = 2;
+    /** Digitaler Pin, zur Messung des Pegelwechsels des rechten Drehzahlsensors */
+    const int D_PIN_IN_SPEED_SENSOR_R = 3;
 
-    // Tigger für alle drei Ultraschallsensoren
-    const int D_PIN_OUT_TRIGGER = 7;
+    /** Digitaler Pin, zum Senden des Triggers aller drei Ultraschallsensoren */
+    const int D_PIN_OUT_TRIGGER = 10;
 
-    // Ultraschallsensor vorne, links, rechts
-    const int D_PIN_IN_ECHO_F = 8;
-    const int D_PIN_IN_ECHO_L = 9;
-    const int D_PIN_IN_ECHO_R = 10;
+    /** Digitaler Pin, zum Empfang des Echos des vorderen Ultraschallsensors */
+    const int D_PIN_IN_ECHO_F = 11;
+    /** Digitaler Pin, zum Empfang des Echos des linken Ultraschallsensors */
+    const int D_PIN_IN_ECHO_L = 12;
+    /** Digitaler Pin, zum Empfang des Echos des rechten Ultraschallsensors */
+    const int D_PIN_IN_ECHO_R = 13;
 
     // abstrakte Methoden
     virtual void setDigitalPin(int pin, bool value) = 0;
