@@ -278,10 +278,6 @@ class SensorData{
       : sensorFront(arduino.D_PIN_OUT_TRIGGER, arduino.D_PIN_IN_ECHO_F),
       sensorRight(arduino.D_PIN_OUT_TRIGGER, arduino.D_PIN_IN_ECHO_R),
       sensorLeft(arduino.D_PIN_OUT_TRIGGER, arduino.D_PIN_IN_ECHO_L) {
-        // Drehzahlsensoren-Pins als Eingangspins setzen
-        pinMode(arduino.D_PIN_IN_SPEED_SENSOR_L, INPUT);
-        pinMode(arduino.D_PIN_IN_SPEED_SENSOR_R, INPUT);
-
         // Interrupts auf Drehzahlsensoren-Pins setzen
         SensorData::instance = this;
         attachInterrupt(digitalPinToInterrupt(arduino.D_PIN_IN_SPEED_SENSOR_L), []() { instance->RPM_left(); }, RISING);
