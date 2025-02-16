@@ -5,14 +5,15 @@
 #include <NewPing.h> // Abstand berechnen
 #include <L298NX2.h> // Motoren ansteuern
 
+/**
+ * Diese Klasse bildet das Interface zur Ansteuerung der Arduino-Pins.
+ * Pin-Namensstruktur: `(D|PWM|A)_PIN_(OUT|IN)_{NAME}`
+ * - Art des Pins: `D` = Digital, `PWM` = PulseWidthModulation, `A` = Analog
+ * - Richtung des Pins: `OUT` = Ausgang, `IN` = Eingang
+ * - Name des Pins: `{NAME}` bezeichnet die Funktion des Pins
+ * 
+ */
 class ArduinoPinInterface{
-  /**
-   * Diese Klasse bildet das Interface zur Ansteuerung der Arduino-Pins.
-   * OUT -> Ausgangspin
-   * INT -> Eingangspin
-   * D -> digial
-   * PWM -> Pulsweitenmodulation.
-   */
   private:
   public:
     /** Digitaler Pin, zur Steuerung des linken Motors (Vorwaerts) */
@@ -47,10 +48,31 @@ class ArduinoPinInterface{
     /** Digitaler Pin, zum Empfang des Echos des rechten Ultraschallsensors */
     const int D_PIN_IN_ECHO_R = 13;
 
-    // abstrakte Methoden
+    /**
+     * Setzt einen digitalen Pin auf den angegebenen Wert.
+     * @param pin Der zu setzende Pin. Muss ein digitaler Ausgangs-Pin sein.
+     * @param value Der Wert, auf den der Pin gesetzt werden soll. `true` = HIGH, `false` = LOW
+     */
     virtual void setDigitalPin(int pin, bool value) = 0;
+    /**
+     * Liest den Wert eines digitalen Pins.
+     * @param pin Der zu lesende Pin. Muss ein digitaler Eingangs-Pin sein.
+     * @return Der gelesene Wert des Pins. `true` = HIGH, `false` = LOW.
+     */
     virtual bool getDigitalPin(int pin) = 0;
+    /**
+     * Setzt einen analogen Pin auf den angegebenen Wert.
+     * @param pin Der zu setzende Pin. Muss ein analoger Ausgangs-Pin sein.
+     * @param value Der Wert, auf den der Pin gesetzt werden soll. Gibt die Stärke des Signals an.
+     *              Gültige Werte sind `0` (kein Signal) bis `255` (maximales Signal).
+     */
     virtual void setAnalogPin(int pin, int value) = 0;
+    /**
+     * Liest den Wert eines analogen Pins.
+     * @param pin Der zu lesende Pin. Muss ein analoger Eingangs-Pin sein.
+     * @return Der gelesene Wert des Pins. Gibt die Stärke des Signals an.
+     *         Typischerweise zwischen `0` (kein Signal) und `255` (maximales Signal).
+     */
     virtual int getAnalogPin(int pin) = 0;
 };
 
@@ -78,18 +100,40 @@ class Arduino: public ArduinoPinInterface{
       pinMode(D_PIN_IN_ECHO_R, INPUT);
     }
 
+    /**
+     * Setzt einen digitalen Pin auf den angegebenen Wert.
+     * @param pin Der zu setzende Pin. Muss ein digitaler Ausgangs-Pin sein.
+     * @param value Der Wert, auf den der Pin gesetzt werden soll. `true` = HIGH, `false` = LOW
+     */
     void setDigitalPin(int pin, bool value) override {
       digitalWrite(pin, value? HIGH : LOW);
     }
 
+    /**
+     * Liest den Wert eines digitalen Pins.
+     * @param pin Der zu lesende Pin. Muss ein digitaler Eingangs-Pin sein.
+     * @return Der gelesene Wert des Pins. `true` = HIGH, `false` = LOW.
+     */
     bool getDigitalPin(int pin) override {
       return digitalRead(pin);
     }
 
+    /**
+     * Setzt einen analogen Pin auf den angegebenen Wert.
+     * @param pin Der zu setzende Pin. Muss ein analoger Ausgangs-Pin sein.
+     * @param value Der Wert, auf den der Pin gesetzt werden soll. Gibt die Stärke des Signals an.
+     *              Gültige Werte sind `0` (kein Signal) bis `255` (maximales Signal).
+     */
     void setAnalogPin(int pin, int value) override {
       analogWrite(pin, value);
     }
 
+    /**
+     * Liest den Wert eines analogen Pins.
+     * @param pin Der zu lesende Pin. Muss ein analoger Eingangs-Pin sein.
+     * @return Der gelesene Wert des Pins. Gibt die Stärke des Signals an.
+     *         Typischerweise zwischen `0` (kein Signal) und `255` (maximales Signal).
+     */
     int getAnalogPin(int pin) override {
       return analogRead(pin);
     }
@@ -97,19 +141,41 @@ class Arduino: public ArduinoPinInterface{
 
 class ArduinoMock: public ArduinoPinInterface{
   public:
+    /**
+     * Gibt eine Meldung aus, dass der Pin auf den angegebenen Wert gesetzt wurde.
+     * @param pin Der zu setzende Pin. Muss ein digitaler Ausgangs-Pin sein.
+     * @param value Der Wert, auf den der Pin gesetzt werden soll. `true` = HIGH, `false` = LOW
+     */
     void setDigitalPin(int pin, bool value) override {
       std::cout << "set pin: " << pin << "set value: " << value << std::endl;
     }
 
+    /**
+     * Gibt eine Meldung aus, dass der Pin gelesen wurde und liefert den Beispiel-Wert `true`.
+     * @param pin Der zu lesende Pin. Muss ein digitaler Eingangs-Pin sein.
+     * @return Der gelesene Wert des Pins. `true` = HIGH, `false` = LOW.
+     */
     bool getDigitalPin(int pin) override {
       std::cout << "get pin: " << pin << std::endl;
       return true;
     }
 
+    /**
+     * Gibt eine Meldung aus, dass der Pin auf den angegebenen Wert gesetzt wurde.
+     * @param pin Der zu setzende Pin. Muss ein analoger Ausgangs-Pin sein.
+     * @param value Der Wert, auf den der Pin gesetzt werden soll. Gibt die Stärke des Signals an.
+     *              Gültige Werte sind `0` (kein Signal) bis `255` (maximales Signal).
+     */
     void setAnalogPin(int pin, int value) override {
       std::cout << "set pin: " << pin << "set value: " << value << std::endl;
     }
 
+    /**
+     * Gibt eine Meldung aus, dass der Pin gelesen wurde und liefert den Beispiel-Wert `1`.
+     * @param pin Der zu lesende Pin. Muss ein analoger Eingangs-Pin sein.
+     * @return Der gelesene Wert des Pins. Gibt die Stärke des Signals an.
+     *         Typischerweise zwischen `0` (kein Signal) und `255` (maximales Signal).
+     */
     int getAnalogPin(int pin) override {
       std::cout << "get pin: " << pin  << std::endl;
       return 1;
