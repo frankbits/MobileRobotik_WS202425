@@ -1,21 +1,18 @@
 #include <Arduino.h>
-#include <util/atomic.h> // Diese Bibliothek fügt das ATOMIC_BLOCK-Makro ein.
-#include <FreqCount.h> // Drehzahl ermitteln
 #include <iostream>
+#include <util/atomic.h> // Diese Bibliothek fügt das ATOMIC_BLOCK-Makro ein.
+
 #include <NewPing.h> // Abstand berechnen
 #include <L298NX2.h> // Motoren ansteuern
 
 class ArduinoPinInterface{
   /**
-   * Diese Klasse bildet das Interface zur ansteuerung der
-   * Arduino-Pins.
-   * out -> Ausgangspin
-   * in -> Eingangspin
-   * 
-   * TODO: die Werte der setter Methoden sollen in einer internen Map
-   * gespeichert werden (siehe Klasse SensorDaten).
+   * Diese Klasse bildet das Interface zur Ansteuerung der Arduino-Pins.
+   * OUT -> Ausgangspin
+   * INT -> Eingangspin
+   * D -> digial
+   * PWM -> Pulsweitenmodulation.
    */
-
   private:
   public:
     /** Digitaler Pin, zur Steuerung des linken Motors (Vorwaerts) */
@@ -59,6 +56,28 @@ class ArduinoPinInterface{
 
 class Arduino: public ArduinoPinInterface{
   public:
+    Arduino(){
+      /** Pins für Motoren als Ausgang definieren */
+      pinMode(D_PIN_OUT_MOTOR_L_BACK, OUTPUT);
+      pinMode(D_PIN_OUT_MOTOR_L_FORW, OUTPUT);
+      pinMode(PWM_PIN_OUT_MOTOR_L_ENA, OUTPUT); // PWM
+      pinMode(D_PIN_OUT_MOTOR_R_BACK, OUTPUT);
+      pinMode(D_PIN_OUT_MOTOR_R_FORW, OUTPUT);
+      pinMode(PWM_PIN_OUT_MOTOR_R_ENB, OUTPUT); // PWM
+
+      /** Pins für Drehzahlsensor als Eingang definieren */
+      pinMode(D_PIN_IN_SPEED_SENSOR_L, INPUT);
+      pinMode(D_PIN_IN_SPEED_SENSOR_R, INPUT);
+
+      /** Pin Trigger für Ultraschallsensor als Ausgang definieren */
+      pinMode(D_PIN_OUT_TRIGGER, OUTPUT);
+
+      /** Pins Echo für Ultraschallsensoren als Eingang definieren */
+      pinMode(D_PIN_IN_ECHO_F, INPUT);
+      pinMode(D_PIN_IN_ECHO_L, INPUT);
+      pinMode(D_PIN_IN_ECHO_R, INPUT);
+    }
+
     void setDigitalPin(int pin, bool value) override {
       digitalWrite(pin, value? HIGH : LOW);
     }
@@ -100,7 +119,8 @@ class ArduinoMock: public ArduinoPinInterface{
 Arduino arduino;
 Robot robot;
 
-void setup() {}
+void setup(){
+}
 
 void loop() {
   // 1. RoboterController fragt die Daten von SensorData ab z.B.: getCurrentSensorData()
