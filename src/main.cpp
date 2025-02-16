@@ -131,11 +131,6 @@ class DistanceSensor {
   private:
     const int MAX_DISTANCE = 100;
     NewPing sensor;
-    float distance = 0.0;
-
-    void calcDistance() {
-      distance = sensor.ping_cm();
-    }
 
   public:
     // Konstruktor mit Initialisierungsliste
@@ -144,7 +139,7 @@ class DistanceSensor {
     }
 
     float getCurrentDistance() {
-      return distance;
+      return sensor.ping_cm();
     }
 };
 
