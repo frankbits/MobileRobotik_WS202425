@@ -33,7 +33,7 @@ SensorData::SensorData()
     // Interrupts auf Drehzahlsensoren-Pins setzen
     SensorData::instance = this;
     attachInterrupt(digitalPinToInterrupt(arduino.D_PIN_IN_SPEED_SENSOR_L), []() { instance->RPM_left(); }, RISING);
-    attachInterrupt(digitalPinToInterrupt(arduino.D_PIN_IN_SPEED_SENSOR_R), []() { instance->RPM_left(); }, RISING);
+    attachInterrupt(digitalPinToInterrupt(arduino.D_PIN_IN_SPEED_SENSOR_R), []() { instance->RPM_right(); }, RISING);
 }
 
 void SensorData::update(){
