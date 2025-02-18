@@ -1,8 +1,8 @@
 #include "Robot.h"
 
-const int Robot::THRESHOLD_FREE_F = 5;
-const int Robot::THRESHOLD_FREE_L = 20;
-const int Robot::THRESHOLD_FREE_R = 20;
+const int Robot::THRESHOLD_FREE_F = 25;
+const int Robot::THRESHOLD_FREE_L = 25;
+const int Robot::THRESHOLD_FREE_R = 25;
 
 bool Robot::frontIsFree(){
     if(sensorData.getDistanceF() >= THRESHOLD_FREE_F){
@@ -47,12 +47,24 @@ void Robot::next(){
 
     float distanceDelta = distanceL - distanceR;
 
-    if (rightIsFree()) {
+    movement.motors.backward();
+    delay(50);
+    if (distanceF < 4 || distanceL < 4 || distanceR < 4) {
+        if (!frontIsFree() && !leftIsFree() && !rightIsFree()) {
+            movement.turnRight(90, 0);
+            delay(100);
+        }
+        movement.motors.backward();
+        delay(500);
+    }
+
+    if (rightIsFree())
+    {
         Serial.println("__________>>>>>");
         moveForward(distanceDelta);
         delay(100);
         movement.turnRight(90, 0.0);
-        delay(100);
+        delay(25);
         moveForward(distanceDelta);
         delay(100);
     }
@@ -65,13 +77,21 @@ void Robot::next(){
     else if (leftIsFree())
     {
         Serial.println("<<<<<__________");
+        moveForward(distanceDelta);
+        delay(100);
         movement.turnLeft(90, 0.0);
-        delay(300);
+        delay(25);
+        moveForward(distanceDelta);
+        delay(100);
     }
     else {
-        Serial.println("_______________");
-        movement.turnLeft(90, 0.0);
-        delay(600);
+        Serial.println("VVVVVVVVVVVVVVV");
+        moveForward(distanceDelta);
+        delay(100);
+        movement.turnRight(90, 0.0);
+        delay(25);
+        moveForward(distanceDelta);
+        delay(100);
     }
     
     movement.stop();
