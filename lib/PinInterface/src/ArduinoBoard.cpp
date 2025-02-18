@@ -2,6 +2,7 @@
 #include <Arduino.h>
 
 ArduinoBoard::ArduinoBoard() {
+  Serial.println("Initializing pins...");
   /** Pins für Motoren als Ausgang definieren */
   pinMode(D_PIN_OUT_MOTOR_L_BACK, OUTPUT);
   pinMode(D_PIN_OUT_MOTOR_L_FORW, OUTPUT);
@@ -11,15 +12,18 @@ ArduinoBoard::ArduinoBoard() {
   pinMode(PWM_PIN_OUT_MOTOR_R_ENB, OUTPUT); // PWM
 
   /** Pins für Drehzahlsensor als Eingang definieren */
-  pinMode(D_PIN_IN_SPEED_SENSOR_L, INPUT);
-  pinMode(D_PIN_IN_SPEED_SENSOR_R, INPUT);
+  // pinMode(D_PIN_IN_SPEED_SENSOR_L, INPUT);
+  // pinMode(D_PIN_IN_SPEED_SENSOR_R, INPUT);
 
   /** Pin Trigger für Ultraschallsensor als Ausgang definieren */
-  pinMode(D_PIN_OUT_TRIGGER, OUTPUT);
+  pinMode(D_PIN_OUT_TRIGGER_F, OUTPUT);
+  pinMode(D_PIN_OUT_TRIGGER_L, OUTPUT);
+  pinMode(D_PIN_OUT_TRIGGER_R, OUTPUT);
 
   /** Pins Echo für Ultraschallsensoren als Eingang definieren */
   pinMode(D_PIN_IN_ECHO_F, INPUT);
   pinMode(D_PIN_IN_ECHO_L, INPUT);
+  pinMode(D_PIN_IN_ECHO_R, INPUT);
 }
 
 void ArduinoBoard::setDigitalPin(int pin, bool value) {

@@ -27,12 +27,14 @@ class ArduinoPinInterface {
       // const int D_PIN_OUT_POSITION_SERVO; //TODO: können PIN 0 oder 1 als digitaler Pin verwendet werden?
   
       /** Digitaler Pin, zur Messung des Pegelwechsels des linken Drehzahlsensors */
-      static const unsigned int D_PIN_IN_SPEED_SENSOR_L;
+      // static const unsigned int D_PIN_IN_SPEED_SENSOR_L;
       /** Digitaler Pin, zur Messung des Pegelwechsels des rechten Drehzahlsensors */
-      static const unsigned int D_PIN_IN_SPEED_SENSOR_R;
+      // static const unsigned int D_PIN_IN_SPEED_SENSOR_R;
   
       /** Digitaler Pin, zum Senden des Triggers aller drei Ultraschallsensoren */
-      static const unsigned int D_PIN_OUT_TRIGGER;
+      static const unsigned int D_PIN_OUT_TRIGGER_F;
+      static const unsigned int D_PIN_OUT_TRIGGER_L;
+      static const unsigned int D_PIN_OUT_TRIGGER_R;
   
       /** Digitaler Pin, zum Empfang des Echos des vorderen Ultraschallsensors */
       static const unsigned int D_PIN_IN_ECHO_F;

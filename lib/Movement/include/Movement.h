@@ -3,9 +3,10 @@
 
 class Movement {
     private:
-      L298NX2 motors;
+      
   
     public:
+      L298NX2 motors;
       Movement();
       
       /**
@@ -52,4 +53,6 @@ class Movement {
        * @param delta der Korrekturfaktor in Prozent (-1.0 bis 1.0)
        */ 
       void forward(unsigned short speed, float delta);
+
+      void stop();
   };

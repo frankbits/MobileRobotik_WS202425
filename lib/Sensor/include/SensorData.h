@@ -25,6 +25,8 @@ class SensorData{
       void RPM_left ();
       
       void RPM_right();
+
+      void resetRPMIfZero();
   
     public:
       static const int MAX_DISTANCE;

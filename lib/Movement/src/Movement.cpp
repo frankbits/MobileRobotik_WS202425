@@ -12,7 +12,7 @@ Movement::Movement(): motors(
 void Movement::turnLeft(unsigned short speed, float delta) {
     if (delta > 1.0) delta = 1.0;
     if (delta < -1.0) delta = -1.0;
-    motors.setSpeedA(speed);
+    motors.setSpeedA(speed + 25);
     motors.setSpeedB(speed + (delta * speed));
     motors.backwardA();
     motors.forwardB();
@@ -21,16 +21,24 @@ void Movement::turnLeft(unsigned short speed, float delta) {
 void Movement::turnRight(unsigned short speed, float delta) {
     if (delta > 1.0) delta = 1.0;
     if (delta < -1.0) delta = -1.0;
-    motors.setSpeedA(speed);
+    motors.setSpeedA(speed + 25);
     motors.setSpeedB(speed + (delta * speed));
     motors.forwardA();
     motors.backwardB();
 }
 
 void Movement::forward(unsigned short speed, float delta) {
-    if (delta > 1.0) delta = 1.0;
-    if (delta < -1.0) delta = -1.0;
-    motors.setSpeedA(speed);
-    motors.setSpeedB(speed + (delta * speed));
+    if (speed > 255) speed = 255;
+    if (delta > 0) {
+        // delta = delta * 0.6;
+    }
+    float speedB = speed + delta;
+    if (speedB > 255) speedB = 255;
+    motors.setSpeedA(speed + 25);
+    motors.setSpeedB(speedB);
     motors.forward();
+}
+
+void Movement::stop() {
+    motors.stop();
 }
