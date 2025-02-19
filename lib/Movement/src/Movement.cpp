@@ -9,33 +9,34 @@ Movement::Movement(): motors(
     arduino.D_PIN_OUT_MOTOR_R_BACK
 ) {};
 
-void Movement::turnLeft(unsigned short speed, float delta) {
-    if (delta > 1.0) delta = 1.0;
-    if (delta < -1.0) delta = -1.0;
-    motors.setSpeedA(speed + 25);
-    motors.setSpeedB(speed + (delta * speed));
+void Movement::turnLeft(unsigned short speed) {
+    if (speed > MAX_SPEED) speed = MAX_SPEED;
+
+    motors.setSpeedA(speed + MECHANICAL_DIFFERENCE);
+    motors.setSpeedB(speed);
+
     motors.backwardA();
     motors.forwardB();
 }
 
-void Movement::turnRight(unsigned short speed, float delta) {
-    if (delta > 1.0) delta = 1.0;
-    if (delta < -1.0) delta = -1.0;
-    motors.setSpeedA(speed + 25);
-    motors.setSpeedB(speed + (delta * speed));
+void Movement::turnRight(unsigned short speed) {
+    if (speed > MAX_SPEED) speed = MAX_SPEED;
+
+    motors.setSpeedA(speed + MECHANICAL_DIFFERENCE);
+    motors.setSpeedB(speed);
+
     motors.forwardA();
     motors.backwardB();
 }
 
 void Movement::forward(unsigned short speed, float delta) {
-    if (speed > 255) speed = 255;
-    if (delta > 0) {
-        // delta = delta * 0.6;
-    }
+    if (speed > MAX_SPEED) speed = MAX_SPEED;
     float speedB = speed + delta;
-    if (speedB > 255) speedB = 255;
-    motors.setSpeedA(speed + 25);
+    if (speedB > MAX_SPEED) speedB = MAX_SPEED;
+
+    motors.setSpeedA(speed + MECHANICAL_DIFFERENCE);
     motors.setSpeedB(speedB);
+
     motors.forward();
 }
 
