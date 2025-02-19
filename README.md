@@ -60,6 +60,10 @@ Die Probleme auf die wir während des Projektes gestoßen sind:
 
 - Dieses Problem wollten wir mit einer Regelung durch die Infrarot Drehzahlsensoren lösen. Diese konnten wir nicht so an den Roboter anbringen, dass sie zuverlässige Messergebnisse liefern. Dadurch war das Verhalten des Roboters nicht deterministisch und eine Parametrierung der Regelstrecke nicht möglich.
 
+Durch die gegebenen Limitationen folgt:
+
+- Der Roboter kann sich in Gängen gut bewegen, durch die inkonsistente Ausrichtung innerhalb der Gänge, ist jedoch keine klaren Wegerkennung möglich. Dadurch kann ein zuverlässiges Lösen des Labyrinths nicht garantiert werden.
+
 ## 5. Verbesserungsmöglichkeiten
 
 - Geradeausfahren mithilfe von Servomotoren sicherstellen
