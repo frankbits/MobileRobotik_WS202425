@@ -57,6 +57,15 @@ class Movement {
       void forward(unsigned short speed, float delta);
 
       /**
+       * Bewege den Roboter mit der gegebenen Geschwindigkeit und Korrektur vorwärts.
+       * 
+       * Die Geschwindigkeit ist der absolute Wert für beide Motoren.
+       * 
+       * @param speed Die gewünschte Geschwindigkeit der Motoren (0 bis 255, praktisch erst ab 70)
+       */
+      void backward(unsigned short speed);
+
+      /**
        * Stoppe beide Motoren des Roboters.
        */
       void stop();

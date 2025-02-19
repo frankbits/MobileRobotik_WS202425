@@ -40,6 +40,15 @@ void Movement::forward(unsigned short speed, float delta) {
     motors.forward();
 }
 
+void Movement::backward(unsigned short speed) {
+    if (speed > MAX_SPEED) speed = MAX_SPEED;
+
+    motors.setSpeedA(speed + MECHANICAL_DIFFERENCE);   
+    motors.setSpeedB(speed);
+
+    motors.backward();
+}
+
 void Movement::stop() {
     motors.stop();
 }
