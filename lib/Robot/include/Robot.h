@@ -25,7 +25,8 @@ class Robot {
       /* Prüft, ob der Weg links frei ist für den Roboter */
       bool rightIsFree();
 
-      void moveForward(float distanceDelta);
+
+      void visualizeLeftAndRightDistance(float distanceL, float distanceR);
   
     public:
       Movement movement;

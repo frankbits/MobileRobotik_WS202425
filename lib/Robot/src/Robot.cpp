@@ -35,63 +35,73 @@ void Robot::next(){
     float distanceL = sensorData.getDistanceL();
     float distanceR = sensorData.getDistanceR();
 
-    // String str = "";
-    // for (int i = 0; i < distanceL; i++) {
-    //     str += "L";
-    // }
-    // str += " | ";
-    // for (int i = 0; i < distanceR; i++) {
-    //     str += "R";
-    // }
-    // Serial.println(str);
+    if (DEBUG_LEVEL == DEBUG_DISTANCE_LR)
+    {
+        visualizeLeftAndRightDistance(distanceL, distanceR);
+    }
 
     float distanceDelta = distanceL - distanceR;
 
-    movement.motors.backward();
-    delay(50);
     if (distanceF < 4 || distanceL < 4 || distanceR < 4) {
         if (!frontIsFree() && !leftIsFree() && !rightIsFree()) {
-            movement.turnRight(90, 0);
+            movement.turnRight(90);
             delay(100);
         }
-        movement.motors.backward();
-        delay(500);
+        else {
+            movement.backward(90);
+            delay(500);
+        }
     }
 
     if (rightIsFree())
     {
-        Serial.println("__________>>>>>");
+        if (DEBUG_LEVEL == DEBUG_MOVE_STATE)
+        {
+            Serial.println("__________>>>>>");
+        }
+        
         moveForward(distanceDelta);
-        delay(100);
-        movement.turnRight(90, 0.0);
+
+        movement.turnRight(90);
         delay(25);
+
         moveForward(distanceDelta);
-        delay(100);
     }
     else if (frontIsFree())
     {
-        Serial.println("_____|||||_____");
-        moveForward(distanceDelta);
-        delay(200);
+        if (DEBUG_LEVEL == DEBUG_MOVE_STATE)
+        {
+            Serial.println("_____|||||_____");
+        }
+
+        moveForward(distanceDelta, 200);
     }
     else if (leftIsFree())
     {
-        Serial.println("<<<<<__________");
+        if (DEBUG_LEVEL == DEBUG_MOVE_STATE)
+        {
+            Serial.println("<<<<<__________");
+        }
+
         moveForward(distanceDelta);
-        delay(100);
-        movement.turnLeft(90, 0.0);
+
+        movement.turnLeft(90);
         delay(25);
+
         moveForward(distanceDelta);
-        delay(100);
     }
     else {
-        Serial.println("VVVVVVVVVVVVVVV");
+        if (DEBUG_LEVEL == DEBUG_MOVE_STATE)
+        {
+            Serial.println("VVVVVVVVVVVVVVV");
+        }
+
         moveForward(distanceDelta);
-        delay(100);
-        movement.turnRight(90, 0.0);
+
+        movement.turnRight(90);
         delay(25);
+
         moveForward(distanceDelta);
-        delay(100);
     }
     
     movement.stop();
@@ -99,30 +109,39 @@ void Robot::next(){
     
 }
 
-void Robot::moveForward(float distanceDelta) {
+void Robot::moveForward(float distanceDelta, unsigned long ms) {
     if (abs(distanceDelta) > 1) {
         if (abs(distanceDelta) < 6) {
             float kp = 2;
-            float ki = 0    	;
+            float ki = 0;
             distanceDeltaIntegrator = distanceDeltaIntegrator + distanceDelta;
             delta = (distanceDelta * kp) + (distanceDeltaIntegrator * ki);
-            // Serial.println("distanceDeltaIntegrator: " + (String) distanceDeltaIntegrator);
-            // Serial.println("delta: " + (String) delta);
         }
         else if (distanceDelta > 0)
         {
-            // Serial.println("turnLeft: " + (String)distanceDelta);
-            movement.turnLeft(90, 0);
+            movement.turnLeft(90);
             delay(100);
             movement.stop();
         }
         else {
-            // Serial.println("turnRight: " + (String)distanceDelta);
-            movement.turnRight(90, 0);
+            movement.turnRight(90);
             delay(100);
             movement.stop();
         }
     }
 
     movement.forward(90, delta);
+    delay(ms);
+}
+
+void Robot::visualizeLeftAndRightDistance(float distanceL, float distanceR) {
+    String str = "";
+    for (int i = 0; i < distanceL; i++) {
+        str += "L";
+    }
+    str += " | ";
+    for (int i = 0; i < distanceR; i++) {
+        str += "R";
+    }
+    Serial.println(str);
 }
