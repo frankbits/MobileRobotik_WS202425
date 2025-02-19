@@ -11,10 +11,6 @@ ArduinoBoard::ArduinoBoard() {
   pinMode(D_PIN_OUT_MOTOR_R_FORW, OUTPUT);
   pinMode(PWM_PIN_OUT_MOTOR_R_ENB, OUTPUT); // PWM
 
-  /** Pins für Drehzahlsensor als Eingang definieren */
-  // pinMode(D_PIN_IN_SPEED_SENSOR_L, INPUT);
-  // pinMode(D_PIN_IN_SPEED_SENSOR_R, INPUT);
-
   /** Pin Trigger für Ultraschallsensor als Ausgang definieren */
   pinMode(D_PIN_OUT_TRIGGER_F, OUTPUT);
   pinMode(D_PIN_OUT_TRIGGER_L, OUTPUT);

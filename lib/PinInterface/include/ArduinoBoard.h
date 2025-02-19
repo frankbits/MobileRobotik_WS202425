@@ -1,5 +1,8 @@
 #include "ArduinoPinInterface.h"
 
+/**
+ * Klasse, die das Interface zur Ansteuerung der Arduino-Pins implementiert.
+ */
 class ArduinoBoard: public ArduinoPinInterface{
     public:
     /**
@@ -7,8 +10,7 @@ class ArduinoBoard: public ArduinoPinInterface{
      * 
      * Initialisiert die Pin-Modi für verschiedene Funktionen:
      * - Setzt die Pins für die Motorsteuerung als Ausgänge.
-     * - Definiert die Pins für die Drehzahlsensoren als Eingänge.
-     * - Setzt den Pin für den Ultraschall-Trigger als Ausgang.
+     * - Setzt den Pin für die Ultraschall-Trigger als Ausgang.
      * - Definiert die Pins für die Echo-Signale der Ultraschallsensoren als Eingänge.
      */
       ArduinoBoard();
