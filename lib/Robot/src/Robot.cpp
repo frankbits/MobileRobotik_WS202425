@@ -44,6 +44,9 @@ void Robot::next(){
 
     if (distanceF < 4 || distanceL < 4 || distanceR < 4) {
         if (!frontIsFree() && !leftIsFree() && !rightIsFree()) {
+            movement.backward(90);
+            delay(50);
+
             movement.turnRight(90);
             delay(100);
         }
