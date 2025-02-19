@@ -30,7 +30,7 @@ bool Robot::rightIsFree(){
 
 void Robot::enterMaze() {
     movement.forward(90, 0);
-    delay(250);
+    delay(500);
 }
 
 void Robot::next(){
@@ -47,18 +47,13 @@ void Robot::next(){
 
     float distanceDelta = distanceL - distanceR;
 
-    if (distanceF < 4 || distanceL < 4 || distanceR < 4) {
+    if (distanceF < 3 || distanceL < 3 || distanceR < 3) {
         if (!frontIsFree() && !leftIsFree() && !rightIsFree()) {
-            movement.backward(90);
-            delay(50);
-
             movement.turnRight(90);
             delay(100);
         }
-        else {
-            movement.backward(90);
-            delay(500);
-        }
+        movement.backward(90);
+        delay(500);
     }
 
     if (rightIsFree())
@@ -82,7 +77,7 @@ void Robot::next(){
             Serial.println("_____|||||_____");
         }
 
-        moveForward(distanceDelta, 200);
+        moveForward(distanceDelta, 250);
     }
     else if (leftIsFree())
     {
