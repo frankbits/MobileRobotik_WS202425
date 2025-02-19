@@ -1,5 +1,10 @@
 #include "ArduinoPinInterface.h"
 
+/**
+ * Mock-Klasse zum Simulieren der Arduino-Pins.
+ * 
+ * @experimental
+ */
 class ArduinoMock: public ArduinoPinInterface{
     public:
       /**
