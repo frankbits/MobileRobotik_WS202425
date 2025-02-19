@@ -23,17 +23,11 @@ class ArduinoPinInterface {
       /** PWM Pin, zur Steuerung der Geschwindigkeit des rechten Motors */
       static const unsigned int PWM_PIN_OUT_MOTOR_R_ENB;
   
-      /** Digitaler Pin, zur Steuerung des Servos */
-      // const int D_PIN_OUT_POSITION_SERVO; //TODO: können PIN 0 oder 1 als digitaler Pin verwendet werden?
-  
-      /** Digitaler Pin, zur Messung des Pegelwechsels des linken Drehzahlsensors */
-      // static const unsigned int D_PIN_IN_SPEED_SENSOR_L;
-      /** Digitaler Pin, zur Messung des Pegelwechsels des rechten Drehzahlsensors */
-      // static const unsigned int D_PIN_IN_SPEED_SENSOR_R;
-  
-      /** Digitaler Pin, zum Senden des Triggers aller drei Ultraschallsensoren */
+      /** Digitaler Pin, zum Senden des Triggers an den vorderen Ultraschallsensoren */
       static const unsigned int D_PIN_OUT_TRIGGER_F;
+      /** Digitaler Pin, zum Senden des Triggers an den linken Ultraschallsensors */
       static const unsigned int D_PIN_OUT_TRIGGER_L;
+      /** Digitaler Pin, zum Senden des Triggers an den rechten Ultraschallsensors */
       static const unsigned int D_PIN_OUT_TRIGGER_R;
   
       /** Digitaler Pin, zum Empfang des Echos des vorderen Ultraschallsensors */
