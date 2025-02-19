@@ -73,13 +73,13 @@ Durch die gegebenen Limitationen folgt:
 
 # Anhang
 
-## 1. Dömanenmodell
+## 1. Domänenmodell
 
 ![image](/doc/Domain.png)
 
 ## 2. Statemachine
 
-![image](/doc/Statemachine_Regelkreise_Turn_Right_and_Turn_Left.png)
+![image](doc/Statemachine_for_Right_Hand_Rule.png)
 
 ## 3. Regelkreise
 
@@ -87,7 +87,7 @@ Durch die gegebenen Limitationen folgt:
 
 ![image](doc/Statemachine_Regelkreise_Move_Forward.png)
 
-- Right-Hand-Rule:
+- Turn Right, Turn Left:
 
 ![image](doc/Statemachine_Regelkreise_Turn_Right_and_Turn_Left.png)
 
@@ -102,3 +102,9 @@ Durch die gegebenen Limitationen folgt:
 ## 6. Einzelteilzeichnung Sensorhalterung
 
 [Halterungs_SR04.pdf](/doc/Halterung_SR04.pdf)
+
+[HalterungSR04.stl](/doc/HalterungSR04%20v5.stl)
+
+## 7. Aufbauanleitung
+
+[Aufbauanleitung.pdf](/doc/Aufbauanleitung.pdf)
