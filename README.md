@@ -1,5 +1,7 @@
 # MobileRobotik_WS202425
 
+![Robot](doc/Robot.jpeg)
+
 ## 1. Einleitung
 
 In diesem Repository befinden sich die Dateien für die Mobile Robotik Vorlesung im Wintersemester 2024/25.
