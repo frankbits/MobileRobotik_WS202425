@@ -69,29 +69,29 @@ Die Probleme auf die wir während des Projektes gestoßen sind:
 
 ## 1. Dömanenmodell
 
-![image](/doc/Domain.drawio.png)
+![image](/doc/Domain.png)
 
 ## 2. Statemachine
 
-![image](/doc/Statemachine-State%20Machine%20for%20Right-Hand%20Rule.drawio.png)
+![image](/doc/Statemachine_Regelkreise_Turn_Right_and_Turn_Left.png)
 
 ## 3. Regelkreise
 
 - Forward:
 
-![image](/doc/Statemachine-Regelkreise%20Move%20Forward.drawio.png)
+![image](doc/Statemachine_Regelkreise_Move_Forward.png)
 
 - Right-Hand-Rule:
 
-![image](/doc/Statemachine-Regelkreise%20Turn%20Right%20_%20Turn%20Left.drawio.png)
+![image](doc/Statemachine_Regelkreise_Turn_Right_and_Turn_Left.png)
 
 ## 4. Aktivitätsdiagramme
 
-![image](/doc/Statemachine-Aktivitätsdiagramme.drawio.png)
+![image](doc/Statemachine_Aktivitätsdiagramme.png)
 
 ## 5. Pinbelegungsplan
 
-[Anschlussplan_ATmega.pdf](/doc/Anschlussplan_ATmega.pdf)
+[Anschlussplan_ATmega.pdf](/doc/Anschlussplan.pdf)
 
 ## 6. Einzelteilzeichnung Sensorhalterung
 
