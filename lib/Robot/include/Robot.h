@@ -22,7 +22,7 @@ class Robot {
       /* Prüft, ob der Weg links frei ist für den Roboter */
       bool leftIsFree();
   
-      /* Prüft, ob der Weg links frei ist für den Roboter */
+      /* Prüft, ob der Weg rechts frei ist für den Roboter */
       bool rightIsFree();
 
       void moveForward(float distanceDelta, unsigned long ms = 100);
