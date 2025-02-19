@@ -46,7 +46,7 @@ Der Roboter orientiert sich anhand der drei Ultraschallsensoren, welche die Abst
 
 - Roboter über USB an Rechner anschließen
 
-- Upload Taste drücken, oder Tastenkürzel Strg + Alt + U verwenden
+- Upload Taste drücken, oder Tastenkürzel <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>U</kbd> verwenden
 
 - Roboter am Batteriefach einschalten
 
