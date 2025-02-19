@@ -91,8 +91,8 @@ Die Probleme auf die wir während des Projektes gestoßen sind:
 
 ## 5. Pinbelegungsplan
 
-[PDF](/doc/Anschlussplan_ATmega.pdf)
+[Anschlussplan_ATmega.pdf](/doc/Anschlussplan_ATmega.pdf)
 
 ## 6. Einzelteilzeichnung Sensorhalterung
 
-[PDF](/doc/Halterung_SR04.pdf)
+[Halterungs_SR04.pdf](/doc/Halterung_SR04.pdf)
