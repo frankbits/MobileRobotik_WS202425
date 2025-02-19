@@ -42,7 +42,7 @@ Der Roboter orientiert sich anhand der drei Ultraschallsensoren, welche die Abst
 
 - Projekt auch in PlatformIO öffnen:
 
-  ![image](/doc/readmefiles/Platformio%20Screenshot.png)
+  ![image](/doc/Platformio%20Screenshot.png)
 
 - Roboter über USB an Rechner anschließen
 
