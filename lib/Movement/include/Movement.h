@@ -11,7 +11,7 @@ class Movement {
       L298NX2 motors;
 
       /** Maximales PWM-Stellsignal */
-      const short MAX_SPEED = 255;
+      const unsigned short MAX_SPEED = 255;
 
       /** `+ 25`: PWM-Stellsignal-Ausgleich der Mechanikdifferenz zwischen den Motoren */
       const int MECHANICAL_DIFFERENCE = 25;

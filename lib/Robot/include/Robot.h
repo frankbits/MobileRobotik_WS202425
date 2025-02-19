@@ -52,6 +52,15 @@ class Robot {
       void visualizeLeftAndRightDistance(float distanceL, float distanceR);
   
     public:
-      /* Berechnet den nächsten Schritt des Roboters beruhend auf den Messdaten der Sensoren */
+      /**
+       * Berechnet den nächsten Schritt des Roboters beruhend auf den Messdaten der Sensoren
+       * 
+       * 1. RoboterController holt sich die aktuellen Messdaten aus der Klasse SensorData 
+       *   1.1. SensorData holt sich den aktuellen Zustand des Arduinos über das Pininterface
+       *   1.2. SensorData rechnet die Ausgelesenen Werte in verwertbare Einheiten um (Dinstanz in cm)
+       * 2. RoboterController entscheidet, welches Movement nötig ist und errechnet das Korrekturdelta
+       * 3. RoboterController übergibt das Korrketurdelta an die Movement Klasse und führt die entsprechende Bewegung aus
+       * 4. Movement steuert über das Pininteface die Motoren an
+       */
       void next();
   };
