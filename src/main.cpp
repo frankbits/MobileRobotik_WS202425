@@ -8,6 +8,8 @@ Robot robot;
  */
 void setup() {
   Serial.begin(115200);
+
+  robot.enterMaze();
 }
 
 void loop() {

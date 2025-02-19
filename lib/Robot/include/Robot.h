@@ -52,6 +52,9 @@ class Robot {
       void visualizeLeftAndRightDistance(float distanceL, float distanceR);
   
     public:
+      /** Bewegt den Roboter ein Stück vorwärts, um in das Labyrinth zu gelangen */
+      void enterMaze();
+
       /**
        * Berechnet den nächsten Schritt des Roboters beruhend auf den Messdaten der Sensoren
        * 

@@ -28,6 +28,11 @@ bool Robot::rightIsFree(){
     }
 }
 
+void Robot::enterMaze() {
+    movement.forward(90, 0);
+    delay(250);
+}
+
 void Robot::next(){
     sensorData.update();
 
