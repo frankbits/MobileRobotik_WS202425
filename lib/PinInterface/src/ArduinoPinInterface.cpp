@@ -16,4 +16,3 @@ const unsigned int ArduinoPinInterface::D_PIN_IN_ECHO_F = 11;
 const unsigned int ArduinoPinInterface::D_PIN_IN_ECHO_L = 12;
 const unsigned int ArduinoPinInterface::D_PIN_IN_ECHO_R = 13;
 
-ArduinoPinInterface::ArduinoPinInterface() = default;

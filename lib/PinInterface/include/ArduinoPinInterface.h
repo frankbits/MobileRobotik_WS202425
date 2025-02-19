@@ -37,10 +37,7 @@ class ArduinoPinInterface {
       /** Digitaler Pin, zum Empfang des Echos des rechten Ultraschallsensors */
       static const unsigned int D_PIN_IN_ECHO_R;
   
-      /**
-       * Konstruktor der ArduinoPinInterface-Klasse.
-       */
-      ArduinoPinInterface();
+
 
       /**
        * Setzt einen digitalen Pin auf den angegebenen Wert.
